@@ -9,7 +9,9 @@ https://stackoverflow.com/questions/35970282/what-are-chunks-samples-and-frames-
 from kivy.lang import Builder
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.garden.graph import MeshLinePlot
+#from kivy.garden.graph import MeshLinePlot
+from kivy_garden.graph import MeshLinePlot
+#from kivy_garden.graph import Graph, LinePlot
 from kivy.clock import Clock
 from threading import Thread
 #import audioop

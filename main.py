@@ -21,7 +21,7 @@ from android.permissions import request_permissions,Permission,check_permission
 
 
 
-def get_microphone_level():
+def get_microphone_level(self):
     """
     source: http://stackoverflow.com/questions/26478315/getting-volume-levels-from-pyaudio-for-use-in-arduino
     audioop.max alternative to audioop.rms

@@ -45,7 +45,7 @@ def get_microphone_level(self):
             levels = []
         levels.append(mx)
     """
-    
+    self.levels = []  # store levels of microphone
  
     self.samples_per_second = 60 # variables which stores the number of audio samples recorded per second
     #self.audioData = [] # creates a list to store the audio bytes recorded
@@ -103,10 +103,10 @@ class RealTimeMicrophone(App):
         request_permissions([Permission.INTERNET, Permission.RECORD_AUDIO])
         return Builder.load_file("look.kv")
 
-if __name__ == "__main__":
 
 
-    levels = []  # store levels of microphone
+
+    
     
     get_level_thread = Thread(target = get_microphone_level)
     get_level_thread.daemon = True

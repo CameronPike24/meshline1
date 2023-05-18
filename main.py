@@ -21,11 +21,38 @@ from android.permissions import request_permissions,Permission,check_permission
 
 
 
-def get_microphone_level():
 
-    def __init__(self, **kwargs):
-        #self.window = Window
-        super(get_microphone_level, self).__init__(**kwargs)
+  
+    
+    
+
+class Logic(BoxLayout):
+    def __init__(self,):
+        super(Logic, self).__init__()
+        self.plot = MeshLinePlot(color=[1, 0, 0, 1])
+
+    def start(self):
+        self.ids.graph.add_plot(self.plot)
+        Clock.schedule_interval(self.get_value, 0.001)
+
+    def stop(self):
+        Clock.unschedule(self.get_value)
+
+    def get_value(self, dt):
+        self.plot.points = [(i, j/5) for i, j in enumerate(levels)]
+
+
+class RealTimeMicrophone(App):
+    def build(self):
+        request_permissions([Permission.INTERNET, Permission.RECORD_AUDIO])
+        get_level_thread = Thread(target = get_microphone_level)
+        get_level_thread.daemon = True
+        get_level_thread.start()
+        return Builder.load_file("look.kv")
+
+    def get_microphone_level(self):
+
+
     """
     source: http://stackoverflow.com/questions/26478315/getting-volume-levels-from-pyaudio-for-use-in-arduino
     audioop.max alternative to audioop.rms
@@ -49,14 +76,14 @@ def get_microphone_level():
             levels = []
         levels.append(mx)
     """
-    self.levels = []  # store levels of microphone
+        self.levels = []  # store levels of microphone
  
-    self.samples_per_second = 60 # variables which stores the number of audio samples recorded per second
-    #self.audioData = [] # creates a list to store the audio bytes recorded
-    self.mic = get_input(callback=self.micCallback, rate=8000, source='default', buffersize=2048) # initialises the method get_input 
-    print("self.mic = get_input")
-    self.mic.start() # starts the method 'self.mic' recording audio data
-    Clock.schedule_interval(self.readChunk, 1 / self.samples_per_second) # calls the method 'self.readChunk' to read and store each audio buffer (2048 samples)  
+        self.samples_per_second = 60 # variables which stores the number of audio samples recorded per second
+        #self.audioData = [] # creates a list to store the audio bytes recorded
+        self.mic = get_input(callback=self.micCallback, rate=8000, source='default', buffersize=2048) # initialises the method get_input 
+        print("self.mic = get_input")
+        self.mic.start() # starts the method 'self.mic' recording audio data
+       Clock.schedule_interval(self.readChunk, 1 / self.samples_per_second) # calls the method 'self.readChunk' to read and store each audio buffer (2048 samples)  
         
         
       
@@ -82,38 +109,10 @@ def get_microphone_level():
         self.mic.poll()  # calls 'get_input(callback=self.mic_....)' to read content. This byte content is then dispatched to the callback method 'self.micCallback'        
         
     
-  
-    
-    
-
-class Logic(BoxLayout):
-    def __init__(self,):
-        super(Logic, self).__init__()
-        self.plot = MeshLinePlot(color=[1, 0, 0, 1])
-
-    def start(self):
-        self.ids.graph.add_plot(self.plot)
-        Clock.schedule_interval(self.get_value, 0.001)
-
-    def stop(self):
-        Clock.unschedule(self.get_value)
-
-    def get_value(self, dt):
-        self.plot.points = [(i, j/5) for i, j in enumerate(levels)]
-
-
-class RealTimeMicrophone(App):
-    def build(self):
-        request_permissions([Permission.INTERNET, Permission.RECORD_AUDIO])
-        return Builder.load_file("look.kv")
-
-
 
 
     
     
-get_level_thread = Thread(target = get_microphone_level)
-get_level_thread.daemon = True
-get_level_thread.start()
+
 RealTimeMicrophone().run()
     

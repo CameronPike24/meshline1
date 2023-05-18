@@ -48,7 +48,7 @@ class Logic(BoxLayout):
 class RealTimeMicrophone(App):
     def build(self):
         request_permissions([Permission.INTERNET, Permission.RECORD_AUDIO])
-        get_level_thread = Thread(target = get_microphone_level)
+        get_level_thread = Thread(target = self.get_microphone_level)
         get_level_thread.daemon = True
         get_level_thread.start()
         return Builder.load_file("look.kv")

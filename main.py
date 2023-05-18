@@ -108,8 +108,8 @@ class RealTimeMicrophone(App):
 
     
     
-    get_level_thread = Thread(target = get_microphone_level)
-    get_level_thread.daemon = True
-    get_level_thread.start()
-    RealTimeMicrophone().run()
+get_level_thread = Thread(target = get_microphone_level)
+get_level_thread.daemon = True
+get_level_thread.start()
+RealTimeMicrophone().run()
     
